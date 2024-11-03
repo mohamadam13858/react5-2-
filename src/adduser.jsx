@@ -1,13 +1,17 @@
 import React from "react";
 import style from "./style.module.css"
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams , useLocation } from "react-router-dom";
+import Swal from 'sweetalert2'
+
 
 
 
 const AddUser = ()=>{
 
     const {userId} = useParams()
+    const params = useLocation()
     const navigates = useNavigate()
+    
 
 return(
     <div className={`${style.item_content} mt-5 p-4 container-fluid container`}>

@@ -1,9 +1,31 @@
 import React from 'react';
 import style from '../style.module.css'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 const Users = ()=>{
     const navigate = useNavigate()
+    const params = useLocation()
+    
+const handleDelete = (itemId)=>{
+    Swal.fire({
+        title: "حذف رکورد",
+        text: ` ایا از حذف رکورد ${itemId}اطمینان دارید `,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          Swal.fire({
+            title: "Deleted!",
+            text: "حذف با موفقیت انجام شد",
+            icon: "success"
+          });
+        }
+      });
+} 
 
     return (
         <div className={`${style.item_content} mt-5 p-4 container-fluid`}>
@@ -38,9 +60,9 @@ const Users = ()=>{
                     <td>mh711748@gmail.com</td>
                     <td>
                         <i className="fas fa-edit text-warning mx-2 pointer"
-                        onClick={()=>{ return navigate("/User/AddUser/userId")}} ></i>
+                        onClick={()=>{ return navigate("/User/AddUser/userId" , {state : "react"})}} ></i>
 
-                        <i className="fas fa-trash text-danger mx-2 pointer"></i>
+                        <i className="fas fa-trash text-danger mx-2 pointer" onClick={()=>handleDelete(1)}></i>
                     </td>
                 </tr>
             </tbody>
