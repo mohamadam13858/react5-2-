@@ -1,16 +1,17 @@
 import React from "react";
 import style from "./style.module.css"
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 
 
 
 const AddUser = ()=>{
 
     const {userId} = useParams()
+    const navigates = useNavigate()
 
 return(
     <div className={`${style.item_content} mt-5 p-4 container-fluid container`}>
-    <h4 className="text-center text-primary">
+    <h4 className={`${userId ? "text-warning" : "text-primary"} text-center text-primary`}>
         {userId ? "ویرایش کاربر" : "افزودن کاربر" }
     </h4>
     <div className="row justify-content-center mt-5 ">
@@ -44,8 +45,10 @@ return(
             </div>
             
             <div className="col-12 text-start">
-                <button type="button" class="btn btn-danger ms-2">بازگشت</button>
-                <button type="submit" class="btn btn-primary" >
+                <button type="button" class="btn btn-danger ms-2" onClick={()=>{
+                    navigates("/User")
+                }}>بازگشت</button>
+                <button type="submit" class={`${userId ? "btn-warning" : "btn-primary"} btn btn-primary text-light`} >
                 {userId ? "ویرایش " : "افزودن " }
                 </button>
             </div>
