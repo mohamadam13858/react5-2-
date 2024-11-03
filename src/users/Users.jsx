@@ -11,7 +11,7 @@ const Users = () => {
     const [user, setUser] = useState([])
 
 
-    useEffect(() => {
+  useEffect(() => {
         axios.get('https://jsonplaceholder.typicode.com/users').then(res => {
             setUser(res.data)
 
@@ -21,6 +21,26 @@ const Users = () => {
         })
     }, []);
 
+
+/*const am = (id)=>{
+    return axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
+}
+
+const ma = async (id)=>{
+    const res = await am(id);
+    console.log(res.data);
+
+
+
+    console.log(id);
+    
+    
+}
+
+for( const mm of [1,2,3,4,5,6]){
+    ma(mm)
+}
+*/
 
 
     const handleDelete = (itemId) => {
@@ -71,7 +91,7 @@ const Users = () => {
                     </thead>
                     <tbody>
                         {user.map(u => (
-                            <tr>
+                            <tr key={u.id}>
                                 <td>{u.id}</td>
                                 <td>{u.name}</td>
                                 <td>{u.username}</td>
