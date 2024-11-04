@@ -11,36 +11,36 @@ const Users = () => {
     const [user, setUser] = useState([])
 
 
-  useEffect(() => {
+    useEffect(() => {
         axios.get('https://jsonplaceholder.typicode.com/users').then(res => {
             setUser(res.data)
 
         }).catch(err => {
-  
+
 
         })
     }, []);
 
 
-/*const am = (id)=>{
-    return axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
-}
-
-const ma = async (id)=>{
-    const res = await am(id);
-    console.log(res.data);
-
-
-
-    console.log(id);
+    /*const am = (id)=>{
+        return axios.get(`https://jsonplaceholder.typicode.com/users/${id}`)
+    }
+    
+    const ma = async (id)=>{
+        const res = await am(id);
+        console.log(res.data);
     
     
-}
-
-for( const mm of [1,2,3,4,5,6]){
-    ma(mm)
-}
-*/
+    
+        console.log(id);
+        
+        
+    }
+    
+    for( const mm of [1,2,3,4,5,6]){
+        ma(mm)
+    }
+    */
 
 
     const handleDelete = (itemId) => {
@@ -55,24 +55,24 @@ for( const mm of [1,2,3,4,5,6]){
         }).then((result) => {
             if (result.isConfirmed) {
 
-     axios.delete(`https://jsonplaceholder.typicode.com/users/${itemId}`).then(res=>{
-      
-      if(res.status==200){
-        const newUser = user.filter(u => u.id != itemId)
-        setUser(newUser)
-        Swal.fire({
-            title: "Deleted!",
-            text: "حذف با موفقیت انجام شد",
-            icon: "success"
-        });
-      }else{
-        Swal("عملیات با خطا مواجه شد", {
-            icon:"error",
-            button: "متوجه شدم"
-        })
-     }
-      
-     })
+                axios.delete(`https://jsonplaceholder.typicode.com/users/${itemId}`).then(res => {
+
+                    if (res.status == 200) {
+                        const newUser = user.filter(u => u.id != itemId)
+                        setUser(newUser)
+                        Swal.fire({
+                            title: "Deleted!",
+                            text: "حذف با موفقیت انجام شد",
+                            icon: "success"
+                        });
+                    } else {
+                        Swal("عملیات با خطا مواجه شد", {
+                            icon: "error",
+                            button: "متوجه شدم"
+                        })
+                    }
+
+                })
 
             }
         });
@@ -113,7 +113,7 @@ for( const mm of [1,2,3,4,5,6]){
                                 <td>{u.email}</td>
                                 <td>
                                     <i className="fas fa-edit text-warning mx-2 pointer"
-                                        onClick={() => { return navigate("/User/AddUser/userId", { state: "react" }) }} ></i>
+                                        onClick={() =>navigate(`/User/AddUser/${u.id}`)} ></i>
 
                                     <i className="fas fa-trash text-danger mx-2 pointer" onClick={() => handleDelete(u.id)}></i>
                                 </td>
