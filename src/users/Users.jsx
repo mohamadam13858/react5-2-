@@ -46,7 +46,7 @@ for( const mm of [1,2,3,4,5,6]){
     const handleDelete = (itemId) => {
         Swal.fire({
             title: "حذف رکورد",
-            text: ` ایا از حذف رکورد ${itemId}اطمینان دارید `,
+            text: ` ایا از حذف رکورد ${itemId} اطمینان دارید  `,
             icon: "warning",
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
@@ -54,11 +54,26 @@ for( const mm of [1,2,3,4,5,6]){
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "حذف با موفقیت انجام شد",
-                    icon: "success"
-                });
+
+     axios.delete(`https://jsonplaceholder.typicode.com/users/${itemId}`).then(res=>{
+      
+      if(res.status==200){
+        const newUser = user.filter(u => u.id != itemId)
+        setUser(newUser)
+        Swal.fire({
+            title: "Deleted!",
+            text: "حذف با موفقیت انجام شد",
+            icon: "success"
+        });
+      }else{
+        Swal("عملیات با خطا مواجه شد", {
+            icon:"error",
+            button: "متوجه شدم"
+        })
+     }
+      
+     })
+
             }
         });
     }
@@ -100,7 +115,7 @@ for( const mm of [1,2,3,4,5,6]){
                                     <i className="fas fa-edit text-warning mx-2 pointer"
                                         onClick={() => { return navigate("/User/AddUser/userId", { state: "react" }) }} ></i>
 
-                                    <i className="fas fa-trash text-danger mx-2 pointer" onClick={() => handleDelete(1)}></i>
+                                    <i className="fas fa-trash text-danger mx-2 pointer" onClick={() => handleDelete(u.id)}></i>
                                 </td>
                             </tr>
                         ))}

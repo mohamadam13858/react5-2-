@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "./style.module.css"
 import { Navigate, useNavigate, useParams , useLocation } from "react-router-dom";
 import Swal from 'sweetalert2'
+import axios from "axios";
 
 
 
@@ -11,6 +12,27 @@ const AddUser = ()=>{
     const {userId} = useParams()
     const params = useLocation()
     const navigates = useNavigate()
+    const [data , setData] = useState({
+        name:"",
+        username:"",
+        email:"",
+        address :{
+            street:"",
+            city:"",
+            suite:"",
+            zipcode:""
+        }
+    })
+
+    const handleaddUser = (e)=>{
+        e.preventDefault()
+      axios.post("https://jsonplaceholder.typicode.com/users" , data).then(
+        res=>{
+            console.log(res);
+            
+        }
+      )
+    }
     
 
 return(
@@ -19,40 +41,40 @@ return(
         {userId ? "ویرایش کاربر" : "افزودن کاربر" }
     </h4>
     <div className="row justify-content-center mt-5 ">
-        <form className="col-12 col-md-6 bg-light rounded shadow-lg p-3">
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">نام و نام خانوادگی</label>
-                <input type="text" class="form-control"/>
+        <form onSubmit={handleaddUser} className="col-12 col-md-6 bg-light rounded shadow-lg p-3">
+            <div className="mb-3">
+                <label  className="form-label">نام و نام خانوادگی</label>
+                <input type="text" className="form-control" value={data.name} onChange={(e)=>setData({...data , name:e.target.value})}/>
             </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">نام کاربری</label>
-                <input type="text" class="form-control"/>
+            <div className="mb-3">
+                <label  className="form-label">نام کاربری</label>
+                <input type="text" className="form-control"value={data.username} onChange={(e)=>setData({...data, username:e.target.value})}/>
             </div>
-            <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">ایمیل</label>
-                <input type="email" class="form-control"/>
+            <div className="mb-3">
+                <label  className="form-label">ایمیل</label>
+                <input type="email" className="form-control" value={data.email} onChange={(e)=>setData({...data, email:e.target.value})}/>
             </div>
-            <div class="mb-3 row">
-                <label for="exampleInputEmail1" class="form-label">آدرس</label>
+            <div className="mb-3 row">
+                <label  className="form-label">آدرس</label>
                 <div className="col-6 my-1">
-                    <input type="text" class="form-control" placeholder="شهر"/>
+                    <input type="text" className="form-control" placeholder="شهر" value={data.address.city} onChange={(e)=>setData({...data ,address:{...data.address , city:e.target.value}})}/>
                 </div>
                 <div className="col-6 my-1">
-                    <input type="text" class="form-control" placeholder="خیابان"/>
+                    <input type="text" className="form-control" placeholder="خیابان" value={data.address.street} onChange={(e)=>setData({...data ,address:{...data.address , street:e.target.value}})} />
                 </div>
                 <div className="col-6 my-1">
-                    <input type="text" class="form-control" placeholder="ادامه آدرس"/>
+                    <input type="text" className="form-control" placeholder="ادامه آدرس" value={data.address.suite} onChange={(e)=>setData({...data ,address:{...data.address , suite:e.target.value}})} />
                 </div>
                 <div className="col-6 my-1">
-                    <input type="text" class="form-control" placeholder="کد پستی"/>
+                    <input type="text" className="form-control" placeholder="کد پستی" value={data.address.zipcode} onChange={(e)=>setData({...data ,address:{...data.address , zipcode:e.target.value}})}/>
                 </div>
             </div>
             
             <div className="col-12 text-start">
-                <button type="button" class="btn btn-danger ms-2" onClick={()=>{
+                <button type="button" className="btn btn-danger ms-2" onClick={()=>{
                     navigates("/User")
                 }}>بازگشت</button>
-                <button type="submit" class={`${userId ? "btn-warning" : "btn-primary"} btn btn-primary text-light`} >
+                <button type="submit" className={`${userId ? "btn-warning" : "btn-primary"} btn btn-primary text-light`} >
                 {userId ? "ویرایش " : "افزودن " }
                 </button>
             </div>
