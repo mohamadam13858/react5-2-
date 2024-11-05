@@ -1,50 +1,29 @@
-import React from "react"
-import Swal from "sweetalert2"
-
-
+import React, { useState } from 'react';
+import Swal from 'sweetalert2'
 const WithAlert = (MainComponent) => {
-
-    const newComponent = (props) => {
-
-
-        const Confirm = (massage) => {
-            return (
-                Swal.fire({
-                    title: "حذف رکورد",
-                    text: massage,
-                    icon: "warning",
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    showCancelButton: true,
-                    confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "بله",
-                    cancelButtonText: "خیر",
-                    showLoaderOnConfirm: true,
-                    closeOnConfirm: false
-                    
-                })
-            )
+    const NewComponent = (props) => {
+        const Confirm = (message) => {
+            return Swal.fire({
+                title: "حذف رکورد !",
+                text: message,
+                icon: "warning",
+                buttons: ["خیر", "بله"],
+                dangerMode: true,
+            })
         }
-
-
-        const Alert = (massage, icon) => {
-            return (
-                Swal.fire(massage, {
-                    icon : icon,
-                    buttons: "متوجه شدم",
-                })
-            )
+        const Alert = (message, icon) => {
+            return Swal.fire(message, {
+                icon: icon,
+                buttons: "متوجه شدم",
+            });
         }
         return (
-            <MainComponent {...props} Confirm={Confirm} Alert={Alert}/>
+            <MainComponent {...props} Confirm={Confirm} Alert={Alert} />
         )
     }
-
-
-return(newComponent)
-
+    return NewComponent
 }
-export default WithAlert;
+export default WithAlert
 
 
 

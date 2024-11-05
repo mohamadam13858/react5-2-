@@ -55,8 +55,7 @@ const Users = (props) => {
 
 
     const handleDelete = async (itemId) => {
-
-        if (await Confirm(`ایا از حذف رکورد ${itemId} اطمینان داری`)) {
+        if (await Confirm(`شما رکورد ${itemId} حذف کردید`)) {
 
             jpAxios.delete(`/users/${itemId}`).then(res => {
 
@@ -70,8 +69,8 @@ const Users = (props) => {
 
             })
 
-        }else{
-            Alert("شما منصرف شدید" , "info")
+        } else {
+            Alert("شما منصرف شدید", "info")
         }
     };
 
@@ -126,8 +125,14 @@ const Users = (props) => {
                 :
 
                 (
-                    <h4 className=' text-center text-info'>لطفا صبر کنید</h4>
-
+                    <>
+                        <h4 className=' text-center text-info'>لطفا صبر کنید</h4>
+                        <div className="d-flex justify-content-center">
+                            <div className="spinner-border text-info" role="status">
+                                <span className="visually-hidden">Loading...</span>
+                            </div>
+                        </div>
+                    </>
                 )
 
             }
