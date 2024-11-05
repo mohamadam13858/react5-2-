@@ -9,17 +9,25 @@ const Users = () => {
     const navigate = useNavigate()
     const params = useLocation()
     const [user, setUser] = useState([])
+    const [mainUser , setMainUser] = useState([])
 
 
     useEffect(() => {
         axios.get('https://jsonplaceholder.typicode.com/users').then(res => {
             setUser(res.data)
+            setMainUser(res.data)
 
         }).catch(err => {
 
 
         })
     }, []);
+
+
+    const handleSearch = (e)=>{
+        setUser(mainUser.filter(u=>u.name.includes(e.target.value)))
+        console.log(e.target.value);
+    }
 
 
     /*const am = (id)=>{
@@ -83,7 +91,7 @@ const Users = () => {
             <h4 className="text-center">  کاربران</h4>
             <div className=' row my-2 mb-4 justify-content-between w-100 mx-0'>
                 <div className=' form-group col-10 col-md-6  col-lg-4 '>
-                    <input type="text" className=' shadow  form-control' placeholder='جستجو' />
+                    <input type="text" className=' shadow  form-control' placeholder='جستجو' onChange={handleSearch}/>
                 </div>
                 <div className=' col-2 text-start px-0'>
                     <Link to="/User/AddUser">

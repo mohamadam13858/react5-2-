@@ -17,6 +17,11 @@ const AddUser = () => {
         username: "",
         email: "",
         address: {
+
+
+
+
+
             street: "",
             city: "",
             suite: "",
@@ -30,44 +35,40 @@ const AddUser = () => {
 
 
         if (!userId) {
-            axios.post(`https://jsonplaceholder.typicode.com/users`, data).then(
-                res => {
-                    console.log(res);
-                    Swal(`${res.data.name}  با موفقبت ایجاد شد`, {
-                        icon: "sussecc",
-                        buttons: "متوجه شدم"
-                    })
-                }
-            )
-        } else {
-            axios.put(`https://jsonplaceholder.typicode.com/users/${userId}`, data).then(
-                res => {
-                    console.log(res);
-                    Swal(`${res.data.name}  با موفقبت انجام شد` ,{
-                        icon:"sussecc",
-                        buttons:"متوجه شدم"
-                    })
-                }
-            )
+            axios.post('https://jsonplaceholder.typicode.com/users' , data).then(res=>{
+                console.log(res);
+                Swal.fire(`${res.data.name} با موفقیت ایجاد شد`, {
+                    icon: "success",
+                    buttons: "متوجه شدم",            
+                });
+            });
+        }else{
+            axios.put(`https://jsonplaceholder.typicode.com/users/${userId}` , data).then(res=>{
+                console.log(res);
+                Swal.fire(`${res.data.name} با موفقیت ویرایش شد`, {
+                    icon: "success",
+                    buttons: "متوجه شدم",            
+                });
+            });
         }
     }
 
-
-    useEffect(() => {
-        axios.get(`https://jsonplaceholder.typicode.com/users/${userId}`).then(res => {
+    useEffect(()=>{
+        axios.get(`https://jsonplaceholder.typicode.com/users/${userId}` , ).then(res=>{
             setData({
-                name: res.data.name,
-                username: res.data.username,
-                email: res.data.email,
-                address: {
-                    street: res.data.address.street,
-                    city: res.data.address.city,
-                    suite: res.data.address.suite,
-                    zipcode: res.data.address.zipcode
+                name: res.data.name ,
+                username : res.data.username ,
+                email : res.data.email,
+                address : {
+                    street: res.data.address.street ,
+                    city: res.data.address.city ,
+                    suite: res.data.address.suite ,
+                    zipcode: res.data.address.zipcode 
                 }
             })
-        })
-    }, []);
+            
+        });
+    },[])
 
     return (
         <div className={`${style.item_content} mt-5 p-4 container-fluid container`}>
