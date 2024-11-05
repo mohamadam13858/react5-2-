@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import style from "./style.module.css"
 import { Navigate, useNavigate, useParams, useLocation } from "react-router-dom";
 import Swal from 'sweetalert2'
 import axios from "axios";
 import { useEffect } from "react";
+import { jpAxios } from "./jpAxios";
+import { efect, setUserService, updateUserService } from "./service/UserService";
 
 
 
@@ -17,11 +19,6 @@ const AddUser = () => {
         username: "",
         email: "",
         address: {
-
-
-
-
-
             street: "",
             city: "",
             suite: "",
@@ -29,46 +26,20 @@ const AddUser = () => {
         }
     })
 
+
     const handleaddUser = (e) => {
         e.preventDefault()
-
-
-
         if (!userId) {
-            axios.post('https://jsonplaceholder.typicode.com/users' , data).then(res=>{
-                console.log(res);
-                Swal.fire(`${res.data.name} با موفقیت ایجاد شد`, {
-                    icon: "success",
-                    buttons: "متوجه شدم",            
-                });
-            });
-        }else{
-            axios.put(`https://jsonplaceholder.typicode.com/users/${userId}` , data).then(res=>{
-                console.log(res);
-                Swal.fire(`${res.data.name} با موفقیت ویرایش شد`, {
-                    icon: "success",
-                    buttons: "متوجه شدم",            
-                });
-            });
+            setUserService(data);
+        } else {
+            updateUserService(data, userId);
         }
     }
 
-    useEffect(()=>{
-        axios.get(`https://jsonplaceholder.typicode.com/users/${userId}` , ).then(res=>{
-            setData({
-                name: res.data.name ,
-                username : res.data.username ,
-                email : res.data.email,
-                address : {
-                    street: res.data.address.street ,
-                    city: res.data.address.city ,
-                    suite: res.data.address.suite ,
-                    zipcode: res.data.address.zipcode 
-                }
-            })
-            
-        });
-    },[])
+    useEffect(() => {
+        efect(data, setData , userId
+        );
+    }, [])
 
     return (
         <div className={`${style.item_content} mt-5 p-4 container-fluid container`}>

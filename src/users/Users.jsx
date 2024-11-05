@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2'
 import axios from 'axios';
 import { useEffect } from 'react';
+import { jpAxios } from '../jpAxios';
 
 const Users = () => {
     const navigate = useNavigate()
@@ -13,7 +14,7 @@ const Users = () => {
 
 
     useEffect(() => {
-        axios.get('https://jsonplaceholder.typicode.com/users').then(res => {
+        jpAxios.get('/users').then(res => {
             setUser(res.data)
             setMainUser(res.data)
 
@@ -63,7 +64,7 @@ const Users = () => {
         }).then((result) => {
             if (result.isConfirmed) {
 
-                axios.delete(`https://jsonplaceholder.typicode.com/users/${itemId}`).then(res => {
+                jpAxios.delete(`/users/${itemId}`).then(res => {
 
                     if (res.status == 200) {
                         const newUser = user.filter(u => u.id != itemId)
