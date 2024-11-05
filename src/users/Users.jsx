@@ -5,12 +5,14 @@ import Swal from 'sweetalert2'
 import axios from 'axios';
 import { useEffect } from 'react';
 import { jpAxios } from '../jpAxios';
+import WithAlert from '../HOC/WithAlert';
 
-const Users = () => {
+const Users = (props) => {
     const navigate = useNavigate()
     const params = useLocation()
     const [user, setUser] = useState([])
-    const [mainUser , setMainUser] = useState([])
+    const [mainUser, setMainUser] = useState([])
+    const { Confirm, Alert } = props
 
 
     useEffect(() => {
@@ -25,8 +27,8 @@ const Users = () => {
     }, []);
 
 
-    const handleSearch = (e)=>{
-        setUser(mainUser.filter(u=>u.name.includes(e.target.value)))
+    const handleSearch = (e) => {
+        setUser(mainUser.filter(u => u.name.includes(e.target.value)))
         console.log(e.target.value);
     }
 
@@ -52,47 +54,34 @@ const Users = () => {
     */
 
 
-    const handleDelete = (itemId) => {
-        Swal.fire({
-            title: "حذف رکورد",
-            text: ` ایا از حذف رکورد ${itemId} اطمینان دارید  `,
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
+    const handleDelete = async (itemId) => {
 
-                jpAxios.delete(`/users/${itemId}`).then(res => {
+        if (await Confirm(`ایا از حذف رکورد ${itemId} اطمینان داری`)) {
 
-                    if (res.status == 200) {
-                        const newUser = user.filter(u => u.id != itemId)
-                        setUser(newUser)
-                        Swal.fire({
-                            title: "Deleted!",
-                            text: "حذف با موفقیت انجام شد",
-                            icon: "success"
-                        });
-                    } else {
-                        Swal("عملیات با خطا مواجه شد", {
-                            icon: "error",
-                            button: "متوجه شدم"
-                        })
-                    }
+            jpAxios.delete(`/users/${itemId}`).then(res => {
 
-                })
+                if (res.status == 200) {
+                    const newUser = user.filter(u => u.id != itemId)
+                    setUser(newUser)
+                    Alert("حذف باموفقیت انجام شد", "success")
+                } else {
+                    Alert("عملیات با خطا مواجه شد", "error")
+                }
 
-            }
-        });
-    }
+            })
+
+        }else{
+            Alert("شما منصرف شدید" , "info")
+        }
+    };
+
 
     return (
         <div className={`${style.item_content} mt-5 p-4 container-fluid`}>
             <h4 className="text-center">  کاربران</h4>
             <div className=' row my-2 mb-4 justify-content-between w-100 mx-0'>
                 <div className=' form-group col-10 col-md-6  col-lg-4 '>
-                    <input type="text" className=' shadow  form-control' placeholder='جستجو' onChange={handleSearch}/>
+                    <input type="text" className=' shadow  form-control' placeholder='جستجو' onChange={handleSearch} />
                 </div>
                 <div className=' col-2 text-start px-0'>
                     <Link to="/User/AddUser">
@@ -122,7 +111,7 @@ const Users = () => {
                                 <td>{u.email}</td>
                                 <td>
                                     <i className="fas fa-edit text-warning mx-2 pointer"
-                                        onClick={() =>navigate(`/User/AddUser/${u.id}`)} ></i>
+                                        onClick={() => navigate(`/User/AddUser/${u.id}`)} ></i>
 
                                     <i className="fas fa-trash text-danger mx-2 pointer" onClick={() => handleDelete(u.id)}></i>
                                 </td>
@@ -147,4 +136,4 @@ const Users = () => {
 
 }
 
-export default Users;
+export default WithAlert(Users);
