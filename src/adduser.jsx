@@ -37,8 +37,7 @@ const AddUser = () => {
     }
 
     useEffect(() => {
-        efect(data, setData , userId
-        );
+        efect(data, setData , userId);
     }, [])
 
     return (

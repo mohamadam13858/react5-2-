@@ -6,13 +6,14 @@ import axios from 'axios';
 import { useEffect } from 'react';
 import { jpAxios } from '../jpAxios';
 import WithAlert from '../HOC/WithAlert';
+import { Confirm , Alert } from '../utils/Alert';
 
 const Users = (props) => {
     const navigate = useNavigate()
     const params = useLocation()
     const [user, setUser] = useState([])
     const [mainUser, setMainUser] = useState([])
-    const { Confirm, Alert } = props
+   // const { Confirm, Alert } = props
 
 
     useEffect(() => {
@@ -141,4 +142,4 @@ const Users = (props) => {
 
 }
 
-export default WithAlert(Users);
+export default Users;
