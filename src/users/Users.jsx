@@ -30,7 +30,6 @@ const Users = (props) => {
 
     const handleSearch = (e) => {
         setUser(mainUser.filter(u => u.name.includes(e.target.value)))
-        console.log(e.target.value);
     }
 
 

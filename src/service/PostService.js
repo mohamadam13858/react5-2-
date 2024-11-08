@@ -6,6 +6,17 @@ export const getPostService = ()=>{
     return jpAxios.get('/posts')
 }
 
+
+
+export const efect = (data , setData , userId)=>{
+    jpAxios.get(`/Posts/${userId}`,).then(res => {
+        setData({
+            title: res.data.title,
+            body: res.data.body,
+        })
+
+    });
+}
 /*
 export const setUserService = async (data) => {
     const res = await jpAxios.post(`/users`, data)

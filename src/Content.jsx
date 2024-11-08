@@ -8,6 +8,7 @@ import Users from './users/Users.jsx';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import AddUser from './adduser.jsx';
 import WithAlert2 from './HOC/WithAlert2.jsx';
+import AddPosts from './posts/addposts.jsx';
 
 const Content = () => {
 
@@ -22,7 +23,7 @@ const Content = () => {
 
     return (
         <div className={style.content_section} onClick={() => { setShowMenu(false) }}>
-            <i className={"${style.menu_button} fas fa-bars text-dark m-2 pointer d-md-none"}
+            <i className={`${style.menu_button} fas fa-bars text-dark m-2 pointer d-md-none`}
                 onClick={handleShowMenu}
             ></i>
             <Routes>
@@ -36,6 +37,7 @@ const Content = () => {
                     <Route path=':userId' />
                 </Route>
                 <Route path='/Posts' element={<Posts />} />
+                <Route path='/posts/AddPosts' element={ <AddPosts/>}/>
                 <Route path='/Gallery' element={<Gallery />} />
                 <Route path='/Todos' element={<Todos />} />
                 <Route path='*' element={/*<WithAlert2>
