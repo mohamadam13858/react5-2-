@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import style from '../style.module.css'
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate, Route, useNavigate } from 'react-router-dom';
 import { getPostService } from '../service/PostService';
+import Swal from 'sweetalert2';
 
 
 
@@ -35,6 +36,8 @@ const Posts = () => {
 
     useEffect(() => {
         getposts();
+
+
     }, []);
 
 
