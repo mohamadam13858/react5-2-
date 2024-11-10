@@ -86,7 +86,7 @@ const Posts = () => {
                                 <td>{u.body}</td>
                                 <td>
                                     <i className="fas fa-edit text-warning mx-2 pointer"
-                                        onClick={() => navigate(`/Posts/AddUser/${u.id}`)} ></i>
+                                        onClick={() => navigate(`/Posts/AddPosts/${u.id}`)} ></i>
 
                                     <i className="fas fa-trash text-danger mx-2 pointer" onClick={() => handleDelete(u.id)}></i>
                                 </td>

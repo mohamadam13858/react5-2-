@@ -8,7 +8,7 @@ import Users from './users/Users.jsx';
 import { Navigate, Route, Routes } from 'react-router-dom';
 import AddUser from './adduser.jsx';
 import WithAlert2 from './HOC/WithAlert2.jsx';
-import AddPosts from './posts/addposts.jsx';
+import AddPosts from './posts/addposts2.jsx';
 
 const Content = () => {
 
@@ -36,8 +36,17 @@ const Content = () => {
                 <Route path='/User/AddUser' element={<AddUser />}>
                     <Route path=':userId' />
                 </Route>
+
+
+
                 <Route path='/Posts' element={<Posts />} />
-                <Route path='/posts/AddPosts' element={ <AddPosts/>}/>
+                <Route path='/posts/AddPosts' element={ <AddPosts/>}>
+                <Route path=':Postid'/>
+                </Route>
+
+
+
+
                 <Route path='/Gallery' element={<Gallery />} />
                 <Route path='/Todos' element={<Todos />} />
                 <Route path='*' element={/*<WithAlert2>
