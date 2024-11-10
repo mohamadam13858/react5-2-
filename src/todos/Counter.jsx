@@ -1,52 +1,31 @@
-import React, { useReducer } from "react";
-
-const init = {
-    value: 0,
-    value1: 5
-}
-
-
-const reducer = (state, action) => {
-    switch (action.type) {
-        case "mohamad":
-            return { ...state, value: state.value + action.val }
-        case "mohamadd":
-            return {...state , value: state.value - action.val}
-        case "mohamad1":
-            return {...state , value1:state.value1  + action.val }
-        case "mohamadd1":
-            return {...state , value1:state.value1  - action.val }
-        case "mohamaddd":
-            return init
-        default:
-            return state
-    }
-}
-
-
+import React, { useMemo, useState } from 'react';
 const Counter = () => {
-
-
-    const [count, Dispatch] = useReducer(reducer, init)
-
+    const [count, setCount] = useState(0);
+    const [countTwo, setCountTwo] = useState(10);
+    
+    const incrementOne = ()=>{
+        setCount(count + 1)
+    }
+    const incrementTwo = ()=>{
+        setCountTwo(countTwo + 10)
+    }
+    const isEven = useMemo(()=>{
+        console.log(count);
+        let i = 0
+        while (i < 3000) {
+            console.log(i);
+            i++
+        }
+        return count % 2 === 0
+    } , [count])
     return (
-        <div className=" text-center my-3">
-            <h1 className=" text-center">{count.value}</h1>
-            <h1 className=" text-center">{count.value1}</h1>
-            <div className="text-center my-3">
-                <button className=" btn btn-success" onClick={() => Dispatch({ type: 'mohamad' ,val: 1 })}>افزایش</button>
-                <button className=" btn btn-danger" onClick={() => Dispatch({ type: 'mohamadd', val: 2 })}>کاهش</button>
-            </div>
-
-
-            <div className=" text-center my-3">
-                <button className=" btn btn-success" onClick={() => Dispatch({ type: 'mohamad1' , val: 5 })}>افزایش1</button>
-                <button className=" btn btn-danger" onClick={() => Dispatch({ type: 'mohamadd1' , val: 5})}>1کاهش</button>
-            </div>
-            <button className=" btn btn-warning" onClick={() => Dispatch({ type: 'mohamaddd' })}>ریست</button>
+        <div className='text-center my-3'>
+            <h5 className='text-center'>{isEven ? "زوج" : "فرد"}</h5>
+            <button className='btn btn-success' onClick={incrementOne}>{`count-one : ${count}`} </button>
+            <br />
+            <br />
+            <button className='btn btn-success' onClick={incrementTwo}>count-two : {countTwo}</button>
         </div>
-    )
-
+    );
 }
-
 export default Counter;
