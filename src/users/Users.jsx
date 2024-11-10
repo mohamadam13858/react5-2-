@@ -7,8 +7,12 @@ import { useEffect } from 'react';
 import { jpAxios } from '../jpAxios';
 import WithAlert from '../HOC/WithAlert';
 import { Confirm , Alert } from '../utils/Alert';
+import useTitle from '../hooks/useTitle';
+
+
 
 const Users = (props) => {
+    useTitle("کاربران")
     const navigate = useNavigate()
     const params = useLocation()
     const [user, setUser] = useState([])

@@ -3,11 +3,14 @@ import style from '../style.module.css'
 import { Link, Navigate, Route, useNavigate } from 'react-router-dom';
 import { getPostService } from '../service/PostService';
 import Swal from 'sweetalert2';
+import useTitle from '../hooks/useTitle';
 
 
 
 
 const Posts = () => {
+
+    useTitle("پست ها")
     const [mnPost, setMnPost] = useState([])
 
 
